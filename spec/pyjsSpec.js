@@ -42,14 +42,16 @@ describe("String", function() {
   it("should return a copy of the string S with leading and trailing whitespace removed.", function() {
     expect(" foo   ".strip()).toEqual("foo");
   });
+})
 
+describe("list", function(){
   it("should append object to end", function(){
     foo = [1, 2];
     foo.append(3)
     expect(foo).toEqual([1, 2, 3]);
   });
 
-  it("should return a list of the results of applying the function to the items of   the argument sequence(s).", function(){
+  it("should return a list of the results of applying the function to the items of the argument sequence(s).", function(){
     foo = [1, 2];
     bar = foo.map(function(element){return element+1})
     expect(bar).toContain(2);
@@ -82,6 +84,9 @@ describe("String", function() {
     list.remove(5);
     expect(list).toEqual([3]);
   });
+})
+
+describe("dict", function(){
 
   it("should return list of D's keys", function(){
     var D = {1:'one', 2:'two'};
@@ -89,11 +94,9 @@ describe("String", function() {
     expect(D.keys()).toContain('2');
   });
     
-
   it("should return list of D's values", function(){
     var D = {1:'one', 2:'two'};
-    expect(D.values()).toContain('one');
-    expect(D.values()).toContain('two');
+    expect(['one', 'two']).toEqual(D.values());
   });
 
   it("should return list of D's [key, value] pairs", function(){
