@@ -107,3 +107,205 @@ String.prototype.join = function(sequence){
 String.prototype.strip = function() {
     return this.replace( /^\s+|\s+$/g, '' );
 };
+
+
+True = true;
+False = false;
+None = undefined;
+
+int = parseInt;
+float = parseFloat;
+str = String;
+abs = Math.abs;
+
+
+function bool(x){
+    if (x.constructor == Array){
+        return Boolean(x.length);
+    };
+    if (x.constructor == Object){
+        return Boolean(x.keys().length);
+    };
+    return Boolean(x);
+};
+
+function all(iterable){
+    var response = true;
+ 	for (var i=0;i<iterable.length; i++){
+ 	    if (!iterable[i])
+ 	        response = false;
+ 	}
+    return response
+}
+
+function any(iterable){
+ 	for (var i=0;i<iterable.length; i++){
+ 	    if (iterable[i]) return true
+ 	}
+    return false
+}
+
+function apply(callable, args){
+    return callable.apply(callable, args)
+}
+
+function callable(object){
+    return object.constructor === Function;
+}
+
+chr = String.fromCharCode;
+
+function cmp(x, y){
+    if(x<y) return -1
+    if(x==y) return 0
+    if(x>y) return 1
+}
+
+function delattr(object, attr){
+    delete object[attr]
+}
+
+function dict(mapping){
+    mapping = mapping || {};
+    if (mapping.constructor == Array){
+        result = {};
+        for (var i=0;i<mapping.length;i++)
+            result[mapping[i][0]] = mapping[i][1];
+        return result;
+    }
+    return mapping;
+}
+
+function dir(object){
+    var b=1;
+    var keys = [];
+    for (var key in (object || window))
+            keys.append(key);
+    return keys;
+}
+
+function enumerate(iterable, n){
+    result = [];
+    n = n || 0;
+    for (var i=0; i<iterable.length; i++)
+        result.push([i+n, iterable[i]]);
+    return result;
+}
+
+function filter(func, iterable){
+    var result = [];
+    for(var i=0; i<iterable.length; i++)
+        if (bool(func(iterable[i])))
+            result.append(iterable[i]);
+    return result;
+}
+
+function getattr(object, attr, default_){
+    return object.has_key(attr)?object[attr]:default_
+}
+
+function globals(){
+    return dir(window)
+}
+
+function hasattr(object, attr){
+    return object.has_key(attr)
+}
+
+input = prompt;
+
+function isinstance(object, types){
+    types = types.constructor == Array?types:[types]
+    return any(types.map(function(type){return object.constructor == type}))
+};
+
+
+function len(object){
+    return object.length
+};
+
+
+function map(callable, iterable){
+    return iterable.map(callable)
+}
+
+function max(iterable, key){
+    var result = iterable[0];
+    var value = (key)?result[key]:result;
+    for(var i=0; i<iterable.length; i++){
+        var value_iterable = (key)?iterable[i][key]:iterable[i];
+        if (value_iterable>value){
+            result = iterable[i];
+            value = (key)?result[key]:result;
+        }
+    }
+    return result;
+}
+
+function min(iterable, key){
+    var result = iterable[0];
+    var value = (key)?result[key]:result;
+    for(var i=0; i<iterable.length; i++){
+        var value_iterable = (key)?iterable[i][key]:iterable[i];
+        if (value_iterable<value){
+            result = iterable[i];
+            value = (key)?result[key]:result;
+        }
+    }
+    return result;
+}
+
+
+pow = Math.pow;
+print = console.log;
+
+function range(start, stop, step){
+    n = stop?start:0;
+    f = stop || start;
+    step = step || 1;
+    var array = new Array();
+    for(var i=0; i<((f-n)/step); i++)
+        array[i]=step*i+n;
+    return array
+}
+
+function reduce(callable, iterable){
+    return iterable.reduce(callable)
+}
+
+function reversed(iterable){
+    var result = new Array();
+    for (key in iterable)
+        result[key] = iterable[key]
+    return result.reverse()
+};
+
+round = Math.round;
+
+function setattr(object, attr, value){
+    object[attr] = value;
+}
+
+function sum(iterable){
+    return reduce(function(x, y){return x+y}, iterable)
+}
+
+
+function zip(){
+    var result = [];
+    var i = 0;
+    while(true){
+        result[i]=[];
+        var stop = false;
+        for (var j=0; j<arguments.length; j++){
+            result[i].push(arguments[j][i])
+            if (len(arguments[j])==i+1){
+                stop = true;
+            }
+        }
+        if (stop)
+            return result
+        i++;
+        
+    }
+}
