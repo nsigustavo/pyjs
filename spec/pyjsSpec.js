@@ -45,44 +45,122 @@ describe("list", function(){
 
 describe("dict", function(){
 
-  it("should return list of D's keys", function(){
-    var D = {1:'one', 2:'two'};
-    expect(D.keys()).toContain('1');
-    expect(D.keys()).toContain('2');
-  });
-    
-  it("should return list of D's values", function(){
-    var D = {1:'one', 2:'two'};
-    expect(['one', 'two']).toEqual(D.values());
-  });
+    it("D.copy() -> a shallow copy of D", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.copy()).toEqual(D);
+        expect(D.copy()).toNotBe(D);
+    });
 
-  it("should return list of D's [key, value] pairs", function(){
-    var D = {1:'one', 2:'two'};
-    expect(D.items()).toContain(['1','one']);
-    expect(D.items()).toContain(['2','two']);
-  });
+    it("iterkeys alias keys", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.iterkeys).toBe(D.keys);
+    });
 
-  it("should remove all items from D.", function(){
-    var D = {1:'one', 2:'two'};
-    D.clear();
-    expect(D).toEqual({});
-  });
+    it("D.pop(k[,d]) -> v, remove specified key and return the corresponding value.", function(){
+        var D = {1:'one', 2:'two'};
+        var value = D.pop(1);
+        expect(value).toEqual('one');
+        expect(D).toEqual({2:'two'});
+    });
 
-  it("D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.", function(){
-    var D = {1:'one', 2:'two'};
-    expect(D.get(1)).toEqual('one');
-    expect(D.get(2, 'default')).toEqual('two');
-    expect(D.get(3, 'default')).toEqual('default');
-  });
+    it("D.pop(k[,d]) -> v, If key is not found, d is returned if given, otherwise KeyError is raised", function(){
+        var D = {1:'one', 2:'two'};
+        var value = D.pop(171, 171171);
+        expect(value).toEqual(171171);
+        expect(D).toEqual({1:'one', 2:'two'});
+    });
 
-  it("D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.", function(){
-    var D = {1:'one', 2:'two'};
-    expect(D.get(1)).toEqual('one');
-    expect(D.get(2, 'default')).toEqual('two');
-    expect(D.get(3, 'default')).toEqual('default');
-  });
+    it("D.popitem() -> (k, v), remove and return some (key, value) pair as a 2-tuple; but raise KeyError if D is empty.", function(){
+        var D = {1:'one', 2:'two'};
+        var value = D.popitem();
+        expect(value).toEqual(['1','one']);
+        expect(D).toEqual({2:'two'});
+    });
+
+    it("D.update(E) -> None.  Update D from dict.", function(){
+        var D = {1:'one', 2:'two'};
+        D.update({3:'tree', 1:'one updated'});
+        expect(D).toEqual({1:'one updated', 2:'two', 3:'tree'});
+    });
+
+    it("D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D.", function(){
+        var D = {1:'one', 2:'two'};
+        D.setdefault(1, ':p');
+        D.setdefault(3, 'tree');
+        expect(D).toEqual({1:'one', 2:'two', 3:'tree'});
+    });
+
+    it("return an alphabetized list of names comprising (some of) the attributes of the given object, and of attributes reachable from it.", function(){
+        var attrs = ['clear', 'copy', 'get', 'has_key', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'pop', 'popitem', 'setdefault', 'update', 'values']
+        for (var i=0; i<attrs.length; i++)
+            expect(dir({})).toContain(attrs[i]);
+    });
+
+    it("should return list of D's keys", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.keys()).toContain('1');
+        expect(D.keys()).toContain('2');
+    });
+
+    it("should return list of D's values", function(){
+        var D = {1:'one', 2:'two'};
+        expect(['one', 'two']).toEqual(D.values());
+    });
+
+    it("should return list of D's [key, value] pairs", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.items()).toContain(['1','one']);
+        expect(D.items()).toContain(['2','two']);
+    });
+
+    it("iteritems alias to items", function(){
+        var D = {};
+        expect(D.items).toEqual(D.iteritems);
+    });
+
+    it("itervalues alias to values", function(){
+        var D = {1:1};
+        expect(D.values).toEqual(D.itervalues);
+        expect(D.values()).toEqual(D.itervalues());
+    });
+
+    it("should remove all items from D.", function(){
+        var D = {1:'one', 2:'two'};
+        D.clear();
+        expect(D).toEqual({});
+    });
+
+    it("D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.get(1)).toEqual('one');
+        expect(D.get(2, 'default')).toEqual('two');
+        expect(D.get(3, 'default')).toEqual('default');
+    });
+
+    it("D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.get(1)).toEqual('one');
+        expect(D.get(2, 'default')).toEqual('two');
+        expect(D.get(3, 'default')).toEqual('default');
+    });
+
+    it("D.has_key(k) -> True if D has a key k, else False", function(){
+        var D = {1:'one', 2:'two'};
+        expect(D.has_key(1)).toEqual(true);
+        expect(D.has_key(2)).toEqual(true);
+        expect(D.has_key(3)).toEqual(false);
+    });
+
+    it("If called without an argument, return the names in the current scope.", function(){
+        expect(dir()).toEqual(dir(window));  
+    });
+
 
 });
+
+//       a.itervalues  a.pop         a.setdefault  a.values      
+// a.copy        a.get         a.items       a.iterkeys    a.keys        a.popitem     a.update  
+
 
 describe('bool', function(){
 
@@ -334,19 +412,6 @@ describe("dict", function(){
 });
 
 
-describe("dir", function(){
-
-    it("return an alphabetized list of names comprising (some of) the attributes of the given object, and of attributes reachable from it.", function(){
-        expect(dir({})).toEqual([ 'keys', 'values', 'items', 'clear', 'has_key', 'get']);
-    });
-
-    it("If called without an argument, return the names in the current scope.", function(){
-        expect(dir()).toEqual(dir(window));  
-    });
-
-});
-
-
 describe("enumerate", function(){
 
     it("enumerate(iterable) -> iterator for index, value of iterable", function(){
@@ -498,9 +563,11 @@ describe("min", function(){
 
 
 describe("pow", function(){
+
    it("With two arguments, equivalent to x**y", function(){
        expect(pow(2, 2)).toEqual(4);
    });
+
 });
 
 
@@ -518,9 +585,11 @@ describe("range", function(){
    it("Return a list containing an arithmetic progression of integers.", function(){
        expect(range(10)).toEqual([0,1,2,3,4,5,6,7,8,9]);
    });
+
    it("range(i, j) returns [i, i+1, i+2, ..., j-1]; start (!) defaults to 0.", function(){
        expect(range(3, 10)).toEqual([3,4,5,6,7,8,9]);
    });
+
    it(" step is given, it specifies the increment (or decrement).", function(){
        expect(range(3, 10, 2)).toEqual([3, 5, 7, 9]);
    });
@@ -528,7 +597,7 @@ describe("range", function(){
 });
 
 
-describe("range", function(){
+describe("reduce", function(){
 
    it("Apply a function of two arguments cumulatively to the items of a sequence, from left to right, so as to reduce the sequence to a single value.", function(){
         var sum = function(x, y){return x+y;};
@@ -541,12 +610,15 @@ describe("range", function(){
 
 describe("reversed", function(){
 
+   it("Return a iterator empty for iterator empty", function(){
+        expect(reversed([])).toEqual([]);
+   });
+
    it("Return a reverse iterator", function(){
         var iterator = [1, 2, 4];
         expect(reversed(iterator)).toEqual([4,2,1]);
         expect(iterator).toEqual([1, 2, 4]);
    });
-
 });
 
 
@@ -577,6 +649,10 @@ describe("sum", function(){
 
     it("Returns the sum of a sequence of numbers plus the value", function(){
         expect(sum([1,2,3,4])).toEqual(10);
+    });
+
+    it("Returns 0 if sequence is empty", function(){
+        expect(sum([])).toEqual(0);
     });
 
 });

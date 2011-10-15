@@ -5,6 +5,38 @@ Object.prototype.keys = function(){
             keys.append(key);
     return keys;
 };
+
+Object.prototype.iterkeys = Object.prototype.keys;
+
+Object.prototype.pop = function(key, default_value){
+    if (this.has_key(key)){
+        var value = this[key];
+        delete this[key]
+        return value
+    }else{
+        return default_value
+    }
+};
+
+Object.prototype.update = function(dict){
+    for (key in dict){
+        this[key] = dict[key];
+    };
+}
+
+Object.prototype.setdefault = function(key, value){
+    if (!this.has_key(key)){
+        this[key] = value;
+    }
+};
+
+Object.prototype.popitem = function(){
+    var key = this.keys()[0];
+    var response = [key, this[key]];
+    delete this[key]
+    return response
+}
+
 Object.prototype.values = function(){
     var keys = [];
     for (var key in this)
@@ -12,6 +44,7 @@ Object.prototype.values = function(){
             keys.append(this[key]);
     return keys;
 };
+Object.prototype.itervalues = Object.prototype.values
 Object.prototype.items = function(){
     var keys = [];
     for (var key in this)
@@ -20,6 +53,16 @@ Object.prototype.items = function(){
     return keys;
     
 };
+
+Object.prototype.copy = function(){
+    var coping = {};
+    for (var key in this)
+		if (this.hasOwnProperty(key))
+            coping[key] = this[key];
+    return coping;
+};
+
+Object.prototype.iteritems = Object.items
 Object.prototype.clear = function(){
     for (var i in this)
         if (this.hasOwnProperty(i))
@@ -287,7 +330,7 @@ function setattr(object, attr, value){
 }
 
 function sum(iterable){
-    return reduce(function(x, y){return x+y}, iterable)
+    return reduce(function(x, y){return x+y}, iterable) || 0
 }
 
 
