@@ -83,6 +83,7 @@ Array.prototype.insert = function(index, object){
     this[index]=object;
 };
 Array.prototype.pop = function(index){
+    var index = (index==undefined)?(this.length-1):index;
     var value = this[index];
     delete this[index];
     for (var i=index;i<this.length-1;i++)

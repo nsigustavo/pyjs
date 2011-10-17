@@ -39,6 +39,12 @@ describe("list", function(){
         expect(value).toEqual('one');
         expect(D).toEqual(['two']);
     });
+    it("L.pop() -> v, remove lasted item if not specified key and return the value.", function(){
+        var D = ['one', 'two'];
+        var value = D.pop();
+        expect(value).toEqual('two');
+        expect(D).toEqual(['one']);
+    });
 
     it("should append object to end", function() {
         var foo = [1, 2];
