@@ -241,8 +241,8 @@ function dir(object){
 }
 
 function enumerate(iterable, n){
-    result = [];
-    n = n || 0;
+    var result = [];
+    var n = n || 0;
     for (var i=0; i<iterable.length; i++)
         result.push([i+n, iterable[i]]);
     return result;
@@ -316,9 +316,9 @@ pow = Math.pow;
 print = console.log;
 
 function range(start, stop, step){
-    n = stop?start:0;
-    f = stop || start;
-    step = step || 1;
+    var n = stop?start:0;
+    var f = stop || start;
+    var step = step || 1;
     var array = new Array();
     for(var i=0; i<((f-n)/step); i++)
         array[i]=step*i+n;

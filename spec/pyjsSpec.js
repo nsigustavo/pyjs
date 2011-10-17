@@ -41,14 +41,14 @@ describe("list", function(){
     });
 
     it("should append object to end", function() {
-        foo = [1, 2];
+        var foo = [1, 2];
         foo.append(3);
         expect(foo).toEqual([1, 2, 3]);
     });
 
     it("should return a list of the results of applying the function to the items of the argument sequence(s).", function() {
-        foo = [1, 2];
-        bar = foo.map(function(element) {
+        var foo = [1, 2];
+        var bar = foo.map(function(element) {
             return element + 1;
         });
         expect(bar).toContain(2);
@@ -573,8 +573,8 @@ describe("len", function(){
 describe("map", function(){
 
     it("should return a list of the results of applying the function to the items of the argument sequence(s).", function(){
-        foo = [1, 2];
-        bar = map(function(element){return element+1;}, foo);
+        var foo = [1, 2];
+        var bar = map(function(element){return element+1;}, foo);
         expect(bar).toEqual([2, 3]);
     });
 
