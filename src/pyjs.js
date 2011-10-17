@@ -76,7 +76,20 @@ Object.prototype.get = function(key, default_){
         return default_;
 };
 
-
+Array.prototype.insert = function(index, object){
+    for (var i=0;i<(this.length-index);i++){
+        this[this.length-i] = this[this.length-i-1];
+    }
+    this[index]=object;
+};
+Array.prototype.pop = function(index){
+    var value = this[index];
+    delete this[index];
+    for (var i=index;i<this.length-1;i++)
+        this[i] = this[i+1]
+    this.length = this.length-1;
+    return value;
+};
 Array.prototype.append = function(element){
     this.push(element);
 };

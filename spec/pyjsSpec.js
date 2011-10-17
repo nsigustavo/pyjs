@@ -1,44 +1,89 @@
 
 describe("list", function(){
-  it("should append object to end", function(){
-    foo = [1, 2];
-    foo.append(3);
-    expect(foo).toEqual([1, 2, 3]);
-  });
 
-  it("should return a list of the results of applying the function to the items of the argument sequence(s).", function(){
-    foo = [1, 2];
-    bar = foo.map(function(element){return element+1;});
-    expect(bar).toContain(2);
-    expect(bar).toContain(3);
-  });
+    it("L.insert(index, object) -- insert object before index", function(){
+        var L =  [1,2,3,4];
+        L.insert(0, 'zero');
+        expect(L).toEqual(['zero',1,2,3,4]);
+    });
+    it("[1,2,3,4].insert(2,'midle') --> [1, 2, 'midle', 3, 4] insert object before index", function(){
+        var L =  [1,2,3,4];
+        L.insert(2, 'midle');
+        expect(L).toEqual([1,2,'midle',3,4]);
+    });
 
-  it("should apply a function of two arguments cumulatively to the items of a sequence.", function(){
-    var sum = function(x, y){return x+y;};
-    expect([1, 2].reduce(sum)).toEqual(3);
-    expect([1, 2, 3, 4].reduce(sum)).toEqual(10);
-  });
+    it("L.sort(cmp=None) -- stable sort *IN PLACE*", function(){
+        var L =  [4,3,1,2];
+        var cmp_ =function (x, y){
+            if(x<y) return 1
+            if(x==y) return 0
+            if(x>y) return -1
+        }
+        L.sort(cmp_);
+        expect(L).toEqual([4,3,2,1]);
+    });
+
+    it("L.sort() -- stable sort *IN PLACE*", function(){
+        var L =  [4,3,1,2];
+        L.sort();
+        expect(L).toEqual([1,2,3,4]);
+    });
+    it("L.reverse() -- reverse *IN PLACE*", function(){
+        var L =  [1,2,3,4];
+        L.reverse();
+        expect(L).toEqual([4,3,2,1]);
+    });
+    it("L.pop(k) -> v, remove specified key and return the corresponding value.", function(){
+        var D = ['one', 'two'];
+        var value = D.pop(0);
+        expect(value).toEqual('one');
+        expect(D).toEqual(['two']);
+    });
+
+    it("should append object to end", function() {
+        foo = [1, 2];
+        foo.append(3);
+        expect(foo).toEqual([1, 2, 3]);
+    });
+
+    it("should return a list of the results of applying the function to the items of the argument sequence(s).", function() {
+        foo = [1, 2];
+        bar = foo.map(function(element) {
+            return element + 1;
+        });
+        expect(bar).toContain(2);
+        expect(bar).toContain(3);
+    });
+
+    it("should apply a function of two arguments cumulatively to the items of a sequence.", function() {
+        var sum = function(x, y) {
+            return x + y;
+        };
+        expect([1, 2].reduce(sum)).toEqual(3);
+        expect([1, 2, 3, 4].reduce(sum)).toEqual(10);
+    });
 
 
-  it("should return number of occurrences of value.", function() {
-    expect([1,2,3,3].count(3)).toEqual(2);
-  });
+    it("should return number of occurrences of value.", function() {
+        expect([1, 2, 3, 3].count(3)).toEqual(2);
+    });
 
-  it("should extend list by appending elements from the iterable.", function(){
-    var foo = [1, 2];
-    foo.extend([3, 4]);
-    expect(foo).toEqual([1, 2, 3, 4]);
-  });
+    it("should extend list by appending elements from the iterable.", function() {
+        var foo = [1, 2];
+        foo.extend([3, 4]);
+        expect(foo).toEqual([1, 2, 3, 4]);
+    });
 
-  it("should return first index of value.", function(){
-    expect([0,1,2,3].index(3)).toEqual('3');//todo:string é sacanagem
-  });
+    it("should return first index of value.", function() {
+        expect([0, 1, 2, 3].index(3)).toEqual('3');
+        //todo:string é sacanagem
+    });
 
-  it("should remove first occurrence of value.", function(){
-    var list = [5, 3];
-    list.remove(5);
-    expect(list).toEqual([3]);
-  });
+    it("should remove first occurrence of value.", function() {
+        var list = [5, 3];
+        list.remove(5);
+        expect(list).toEqual([3]);
+    });
 
 });
 
